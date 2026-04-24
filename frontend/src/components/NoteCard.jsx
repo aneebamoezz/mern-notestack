@@ -1,42 +1,81 @@
-import { PenSquareIcon, Trash2Icon } from 'lucide-react'
-import React from 'react'
-import { Link } from 'react-router'
-import { formatDate } from '../lib/utils'
-import api from '../lib/axios'
-import toast from 'react-hot-toast'
+import { PenSquareIcon, Trash2Icon } from "lucide-react"
+import React, { useState } from "react"
+import { Link } from "react-router"
+import { formatDate } from "../lib/utils.js"
+import api from "../lib/axios"
+import toast from "react-hot-toast"
+import { confirmAction } from "../utils/alert"
+import { Button } from "./ui/button"
 
-const NoteCard = ({ note, setNotes }) => {
+const NoteCard = ({ note, setNotes, expandedId, setExpandedId }) => {
+  const isLong = note.content.length > 120
+  const expanded = expandedId === note._id
 
-    const handleDelete = async (e, id) => {
-        e.preventDefault();//get rid of the navigation behaviour
-        if (!window.confirm("Are you sure you want delete this note?")) return;
-        try {
-            await api.delete(`/notes/${id}`)
-            setNotes((prev) => prev.filter(note => note._id !== id)) //get rid of the deleted one from the array
-            toast.success("Note deleted successfully!")
-        } catch (error) {
-            console.log("Error in handleDelete", error);
-            toast.error("Failed to delete note")
-        }
+  const toggleExpand = () => {
+    setExpandedId(expanded ? null : note._id)
+  }
+
+  const handleDelete = async (e, id) => {
+    e.preventDefault()
+    const confirmed = await confirmAction("Are you sure you want to delete this note?")
+    if (!confirmed) return
+
+    try {
+      await api.delete(`/notes/${id}`)
+      setNotes((prev) => prev.filter((n) => n._id !== id))
+      toast.success("Note deleted successfully!")
+    } catch (error) {
+      console.log("Error in handleDelete", error)
+      toast.error("Failed to delete note")
     }
+  }
 
-    return (
-        <Link to={`/note/${note._id}`} className='card bg-base-100 hover:shadow-lg transition-all duration-200 border-t-4 border-solid border-[#00c3ff]'>
-            <div className='card-body'>
-                <h3 className='card-title text-base-content'>{note.title}</h3>
-                <p className='text-base-content/70 line-calmp-3'>{note.content}</p>
-                <div className='card-actions justify-between items-center mt-4'>
-                    <span className='text-sm text-base-content/60'>{formatDate(new Date(note.createdAt))}</span>
-                    <div className='flex items-center gap-1'>
-                        <PenSquareIcon className='size-4' />
-                        <button className='btn btn-ghost btn-xs text-error' onClick={(e) => handleDelete(e, note._id)}>
-                            <Trash2Icon className='size-4' />
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </Link>
-    )
+  return (
+    <div className="rounded-xl border border-border bg-card text-card-foreground p-4 shadow-sm hover:shadow-md transition-all">
+      
+      {/* Title */}
+      <h3 className="text-lg font-semibold mb-2 line-clamp-1">
+        {note.title}
+      </h3>
+
+      <p className={`text-sm text-muted-foreground ${expanded ? "" : "line-clamp-2"}`}>
+        {note.content}
+      </p>
+
+      {isLong && (
+        <button
+          type="button"
+          onClick={toggleExpand}
+          className="mt-2 text-xs font-medium text-primary hover:underline dark:text-accent dark:hover:text-accent/80 transition"
+        >
+          {expanded ? "Show less" : "Read more"}
+        </button>
+      )}
+
+      {/* Footer */}
+      <div className="flex items-center justify-between mt-4">
+        <span className="text-xs text-muted-foreground">
+          {formatDate(new Date(note.createdAt))}
+        </span>
+
+        <div className="flex items-center gap-1">
+          <Button asChild size="icon" variant="ghost">
+            <Link to={`/note/${note._id}`}>
+              <PenSquareIcon className="size-4" />
+            </Link>
+          </Button>
+
+          <Button
+            size="icon"
+            variant="destructive"
+            onClick={(e) => handleDelete(e, note._id)}
+          >
+            <Trash2Icon className="size-4" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default NoteCard

@@ -1,18 +1,32 @@
-import React from 'react'
-import { Route, Routes } from 'react-router'
-import HomePage from './pages/HomePage'
-import CreatePage from './pages/CreatePage'
-import NoteDetailPage from './pages/NoteDetailPage'
-import toast from 'react-hot-toast'
+import React, { useEffect, useState } from "react"
+import { Route, Routes } from "react-router"
+import HomePage from "./pages/HomePage"
+import CreatePage from "./pages/CreatePage"
+import NoteDetailPage from "./pages/NoteDetailPage"
 
 const App = () => {
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "light"
+  })
+
+  useEffect(() => {
+    const root = document.documentElement
+
+    if (theme === "dark") {
+      root.classList.add("dark")
+    } else {
+      root.classList.remove("dark")
+    }
+
+    localStorage.setItem("theme", theme)
+  }, [theme])
+
   return (
-    <div data-theme="nord">
-      {/* <div className='absolute inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%_#000_60%,#00ff9d40_100%)]' /> */}
+    <div className="min-h-screen bg-background text-foreground transition-colors duration-500">
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/create" element={<CreatePage /> } />
-        <Route path='/note/:id' element={<NoteDetailPage />} />
+        <Route path="/" element={<HomePage setTheme={setTheme} theme={theme} />} />
+        <Route path="/create" element={<CreatePage setTheme={setTheme} theme={theme} />} />
+        <Route path="/note/:id" element={<NoteDetailPage setTheme={setTheme} theme={theme} />} />
       </Routes>
     </div>
   )

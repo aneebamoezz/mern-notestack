@@ -6,11 +6,12 @@ import toast from "react-hot-toast"
 import NoteCard from '../components/NoteCard'
 import NotesNotFound  from '../components/NotesNotFound'
 
-const HomePage = () => {
+const HomePage = ({theme, setTheme}) => {
 
     const [isRateLimited, setIsRateLimited] = useState(false);
     const [notes, setNotes] = useState([]);
     const [loading, setLoading] = useState(true)
+    const [expandedId, setExpandedId] = useState(null)
 
     useEffect(() => {
         const fetchNotes = async () => {
@@ -37,7 +38,7 @@ const HomePage = () => {
 
     return (
         <div className='min-h-screen'>
-            <Navbar />
+            <Navbar theme={theme} setTheme={setTheme} />
 
             {isRateLimited && <RateLimitedUI />}
 
@@ -48,7 +49,7 @@ const HomePage = () => {
                 {notes.length > 0 && !isRateLimited && (
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
                         {notes.map((note) => (
-                            <NoteCard key={note._id} note={note} setNotes={setNotes} />
+                            <NoteCard key={note._id} note={note} setNotes={setNotes} expandedId={expandedId} setExpandedId={setExpandedId} />
                         ))}
                     </div>
                 )}
