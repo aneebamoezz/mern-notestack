@@ -5,12 +5,14 @@ import api from '../lib/axios'
 import toast from "react-hot-toast"
 import NoteCard from '../components/NoteCard'
 import NotesNotFound  from '../components/NotesNotFound'
+import CreateNoteModal from '@/components/createModalNote'
 
 const HomePage = ({theme, setTheme}) => {
 
     const [isRateLimited, setIsRateLimited] = useState(false);
     const [notes, setNotes] = useState([]);
     const [loading, setLoading] = useState(true)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const [expandedId, setExpandedId] = useState(null)
 
     useEffect(() => {
@@ -38,7 +40,13 @@ const HomePage = ({theme, setTheme}) => {
 
     return (
         <div className='min-h-screen'>
-            <Navbar theme={theme} setTheme={setTheme} />
+            <Navbar theme={theme} setTheme={setTheme} setIsModalOpen={setIsModalOpen} />
+            {isModalOpen && (
+            <CreateNoteModal
+                setIsModalOpen={setIsModalOpen}
+                setNotes={setNotes}
+            />
+            )}
 
             {isRateLimited && <RateLimitedUI />}
 
