@@ -5,6 +5,8 @@ import NoteDetailPage from "./pages/NoteDetailPage";
 import CreateNoteModal from "./components/createModalNote";
 import LoginPage from "./pages/LoginPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Layout from "./components/Layout";
+import Dashboard from "./pages/Dashboard";
 
 const App = () => {
   const [theme, setTheme] = useState(() => {
@@ -32,7 +34,20 @@ const App = () => {
           path="/"
           element={
             <ProtectedRoute>
-              <HomePage setTheme={setTheme} theme={theme} />
+              <Layout>
+                <Dashboard setTheme={setTheme} theme={theme} />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/notes"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <HomePage setTheme={setTheme} theme={theme} />
+              </Layout>
             </ProtectedRoute>
           }
         />
@@ -41,7 +56,9 @@ const App = () => {
           path="/create"
           element={
             <ProtectedRoute>
-              <CreateNoteModal setTheme={setTheme} theme={theme} />
+              <Layout>
+                <CreateNoteModal setTheme={setTheme} theme={theme} />
+              </Layout>
             </ProtectedRoute>
           }
         />
@@ -50,7 +67,9 @@ const App = () => {
           path="/note/:id"
           element={
             <ProtectedRoute>
-              <NoteDetailPage setTheme={setTheme} theme={theme} />
+              <Layout>
+                <NoteDetailPage setTheme={setTheme} theme={theme} />
+              </Layout>
             </ProtectedRoute>
           }
         />

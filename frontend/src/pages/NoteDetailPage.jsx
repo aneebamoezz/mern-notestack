@@ -82,10 +82,10 @@ const NoteDetailPage = () => {
             Back to Notes
           </Link>
 
-          <Button variant="destructive" onClick={handleDelete}>
+          {/* <Button variant="destructive" onClick={handleDelete}>
             <Trash2Icon className="size-4" />
             Delete Note
-          </Button>
+          </Button> */}
         </div>
 
         <div className="rounded-xl border border-border bg-card p-6 text-card-foreground shadow-sm">
