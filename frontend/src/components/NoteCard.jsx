@@ -6,6 +6,7 @@ import api from "../lib/axios"
 import toast from "react-hot-toast"
 import { confirmAction } from "../utils/alert"
 import { Button } from "./ui/button"
+import { capitalizeFirstLetter } from "@/utils/textUtils.js"
 
 const NoteCard = ({ note, setNotes, expandedId, setExpandedId }) => {
   const isLong = note.content.length > 120
@@ -35,11 +36,11 @@ const NoteCard = ({ note, setNotes, expandedId, setExpandedId }) => {
       
       {/* Title */}
       <h3 className="text-lg font-semibold mb-2 line-clamp-1">
-        {note.title}
+        {capitalizeFirstLetter(note?.title || "")}
       </h3>
 
       <p className={`text-sm text-muted-foreground ${expanded ? "" : "line-clamp-2"}`}>
-        {note.content}
+        {capitalizeFirstLetter(note?.content || "")}
       </p>
 
       {isLong && (

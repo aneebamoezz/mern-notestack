@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router";
-import HomePage from "./pages/HomePage";
-import NoteDetailPage from "./pages/NoteDetailPage";
+import HomePage from "./pages/Home";
+import NoteDetailPage from "./pages/NoteDetail";
 import CreateNoteModal from "./components/createModalNote";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
+import Signup from "./pages/signup";
 
 const App = () => {
   const [theme, setTheme] = useState(() => {
@@ -29,6 +30,7 @@ const App = () => {
     <div className="min-h-screen bg-background text-foreground transition-colors duration-500">
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<Signup />} />
 
         <Route
           path="/"

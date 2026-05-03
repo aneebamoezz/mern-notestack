@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { Home, LogOut, NotebookText } from "lucide-react";
+import { confirmAction } from "@/utils/alert";
 
 const Layout = ({ children }) => {
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const confirmed = await confirmAction(
+          "Are you sure you want to Logout?"
+        );
+    
+        if (!confirmed) return;
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/login");
@@ -130,12 +139,37 @@ const Layout = ({ children }) => {
         </div>
 
         {/* Bottom */}
-        <div
-          onClick={handleLogout}
-          className="flex items-center gap-3 px-3 py-2.5 rounded-md cursor-pointer hover:bg-[#e8e8e8] dark:hover:bg-[#2f2f2f]"
-        >
-          <LogOut size={20} />
-          Logout
+        <div className="flex flex-col gap-3">
+
+          {/* User Card */}
+          <div className="flex items-center gap-3 px-3 py-3 rounded-lg bg-[#eaeaea] dark:bg-[#2a2a2a]">
+
+            {/* Avatar */}
+            <div className="w-10 h-10 rounded-full bg-black dark:bg-white text-white dark:text-black flex items-center justify-center font-semibold">
+              {user?.name?.charAt(0)?.toUpperCase() || "U"}
+            </div>
+
+            {/* User Info */}
+            <div className="flex flex-col leading-tight">
+              <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                {user?.name || "User"}
+              </span>
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                {user?.email}
+              </span>
+            </div>
+
+          </div>
+
+          {/* Logout Button */}
+          <div
+            onClick={handleLogout}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-md cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-red-900/20 transition"
+          >
+            <LogOut size={20} />
+            <span className="font-medium">Logout</span>
+          </div>
+
         </div>
       </aside>
 

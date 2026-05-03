@@ -2,9 +2,9 @@ import Note from "../models/Note.js";
 
 
 
-export async function getAllNotes(_, res) {
+export async function getAllNotes(req, res) {
     try {
-        const notes = await Note.find().sort({createdAt: -1}); //newest first
+        const notes = await Note.find({ user: req.user }).sort({ createdAt: -1 }); //newest first
         res.status(200).json(notes)
     }   catch (error) {
         console.log("Error in getAllNotes controller", error);
@@ -26,17 +26,21 @@ export async function getNoteById(req, res) {
 }   
 
 export async function createNote(req, res) {
-    try {
-        const {title, content} = req.body;
-        const note = new Note({title, content})   
+  try {
+    const { title, content } = req.body;
 
-        const savedNote = await note.save();
-        res.status(201).json(savedNote)
-    }   catch (error) {
-        console.log("Error in createNote controller", error);
+    const note = new Note({
+      title,
+      content,
+      user: req.user,
+    });
 
-        res.status(500).json({message: "Internal server error"})
-    }
+    const savedNote = await note.save();
+    res.status(201).json(savedNote);
+  } catch (error) {
+    console.log("Error in createNote controller", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 }
 
 export async function updateNote (req, res){

@@ -29,18 +29,18 @@ const NoteDetailPage = () => {
     fetchNote()
   }, [id])
 
-  const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to delete this note?")) return
+  // const handleDelete = async () => {
+  //   if (!window.confirm("Are you sure you want to delete this note?")) return
 
-    try {
-      await api.delete(`/notes/${id}`)
-      toast.success("Note deleted")
-      navigate("/")
-    } catch (error) {
-      console.log("Error deleting the note", error)
-      toast.error("Failed to delete note")
-    }
-  }
+  //   try {
+  //     await api.delete(`/notes/${id}`)
+  //     toast.success("Note deleted")
+  //     navigate("/")
+  //   } catch (error) {
+  //     console.log("Error deleting the note", error)
+  //     toast.error("Failed to delete note")
+  //   }
+  // }
 
   const handleSave = async () => {
     if (!note.title.trim() || !note.content.trim()) {
