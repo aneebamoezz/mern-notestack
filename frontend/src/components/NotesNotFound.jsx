@@ -1,8 +1,8 @@
-import { NotebookIcon } from "lucide-react"
+import { NotebookIcon, PlugIcon } from "lucide-react"
 import { Link } from "react-router"
 import { Button } from "./ui/button"
 
-const NotesNotFound = () => {
+const NotesNotFound = ({setIsModalOpen}) => {
   return (
     <div className="mx-auto flex max-w-md flex-col items-center justify-center space-y-6 py-16 text-center text-foreground">
       <div className="rounded-full border border-border bg-muted p-8 shadow-sm">
@@ -19,11 +19,13 @@ const NotesNotFound = () => {
         </p>
       </div>
 
-      <Button asChild>
-        <Link to="/create">
-          Create Your First Note
-        </Link>
-      </Button>
+      <Button
+            onClick={() => setIsModalOpen && setIsModalOpen(true)}
+            className="flex items-center gap-2 rounded-lg shadow-sm"
+          >
+            <span className="hidden sm:inline">Create Your First Note</span>
+            <span className="sm:hidden">New</span>
+          </Button>
     </div>
   )
 }

@@ -78,9 +78,7 @@ const DashboardPage = ({theme, setTheme}) => {
         </div>
 
 
-        {loading ? (
-          <p>Loading...</p>
-        ) : notes.length === 0 ? (
+        {notes.length === 0 ? (
           <p>No recent notes found.</p>
         ) : (
           <div className="space-y-4">
@@ -143,11 +141,11 @@ const DashboardPage = ({theme, setTheme}) => {
         )}
       </div>
       {isModalOpen && (
-            <CreateNoteModal
-                setIsModalOpen={setIsModalOpen}
-                setNotes={setNotes}
-            />
-            )}
+        <CreateNoteModal
+            setIsModalOpen={setIsModalOpen}
+            setNotes={setNotes}
+        />
+      )}
     </>
   );
 };

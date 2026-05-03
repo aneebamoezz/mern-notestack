@@ -115,10 +115,16 @@ const NoteDetailPage = () => {
               />
             </div>
 
-            <div className="flex justify-end">
+            <div className="flex gap-2 justify-end">
               <Button disabled={saving} onClick={handleSave}>
                 {saving ? "Saving..." : "Save Changes"}
               </Button>
+              <div
+                onClick={() => navigate("/notes")}
+                className="flex items-center bg-red-200 px-2 rounded-md cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-red-900/20 transition"
+              >
+                <span className="font-medium">Cancel</span>
+              </div>
             </div>
           </div>
         </div>

@@ -59,7 +59,7 @@ const NoteCard = ({ note, setNotes, expandedId, setExpandedId }) => {
           {formatDate(new Date(note.createdAt))}
         </span>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center">
           <Button asChild size="icon" variant="ghost">
             <Link to={`/note/${note._id}`}>
               <PenSquareIcon className="size-4" />
