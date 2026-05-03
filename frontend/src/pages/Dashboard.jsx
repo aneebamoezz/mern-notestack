@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import CreateNoteModal from "@/components/createModalNote";
 import { capitalizeFirstLetter } from "@/utils/textUtils";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const DashboardPage = ({theme, setTheme}) => {
   const [notes, setNotes] = useState([]);
@@ -94,28 +95,56 @@ const DashboardPage = ({theme, setTheme}) => {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2 text-sm">
-                  <button
-                    onClick={() => setSelectedNote(note)}
-                    className="text-gray-500 dark:text-gray-400 hover:underline"
-                  >
-                    <EyeIcon size={16} />
-                  </button>
+                <TooltipProvider>
+                  <div className="flex items-center gap-3 text-sm">
 
-                  <Link
-                    to={`/note/${note._id}`}
-                    className="flex items-center gap-1 text-gray-500 dark:text-gray-400 hover:underline"
-                  >
-                    <PenBoxIcon size={16} />
-                  </Link>
+                    {/* View */}
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          onClick={() => setSelectedNote(note)}
+                          className="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition"
+                        >
+                          <EyeIcon size={17} />
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>View</p>
+                      </TooltipContent>
+                    </Tooltip>
 
-                  <button
-                    onClick={() => handleDelete(note._id)}
-                    className="flex items-center gap-1 text-red-500 hover:underline"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
+                    {/* Edit */}
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Link
+                          to={`/note/${note._id}`}
+                          className="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition"
+                        >
+                          <PenBoxIcon size={17} />
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Edit</p>
+                      </TooltipContent>
+                    </Tooltip>
+
+                    {/* Delete */}
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <button
+                          onClick={() => handleDelete(note._id)}
+                          className="text-red-500 hover:text-red-700 transition"
+                        >
+                          <Trash2 size={17} />
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Delete</p>
+                      </TooltipContent>
+                    </Tooltip>
+
+                  </div>
+                </TooltipProvider>
               </div>
             ))}
           </div>
