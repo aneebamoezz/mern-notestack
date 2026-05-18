@@ -8,6 +8,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
 import Signup from "./pages/signup";
+import Profile from "./pages/Profile";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const App = () => {
   const [theme, setTheme] = useState(() => {
@@ -31,6 +34,8 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         <Route
           path="/"
@@ -38,6 +43,17 @@ const App = () => {
             <ProtectedRoute>
               <Layout>
                 <Dashboard setTheme={setTheme} theme={theme} />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Profile />
               </Layout>
             </ProtectedRoute>
           }

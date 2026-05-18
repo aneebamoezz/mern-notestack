@@ -52,6 +52,8 @@ const SignupPage = () => {
         </h1>
 
         <form onSubmit={handleSignup} className="space-y-4">
+          <input type="text" name="fake_email" autoComplete="username" className="hidden" />
+          <input type="password" name="fake_password" autoComplete="current-password" className="hidden" />
           <div>
             <label className="block pb-2 text-sm">
               Name <span className="text-red-600">*</span>

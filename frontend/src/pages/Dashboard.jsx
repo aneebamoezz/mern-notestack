@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import CreateNoteModal from "@/components/createModalNote";
 import { capitalizeFirstLetter } from "@/utils/textUtils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { formatDate } from "@/lib/utils";
 
 const DashboardPage = ({theme, setTheme}) => {
   const [notes, setNotes] = useState([]);
@@ -95,56 +96,9 @@ const DashboardPage = ({theme, setTheme}) => {
                   </p>
                 </div>
 
-                <TooltipProvider>
-                  <div className="flex items-center gap-3 text-sm">
-
-                    {/* View */}
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button
-                          onClick={() => setSelectedNote(note)}
-                          className="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition"
-                        >
-                          <EyeIcon size={17} />
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>View</p>
-                      </TooltipContent>
-                    </Tooltip>
-
-                    {/* Edit */}
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Link
-                          to={`/note/${note._id}`}
-                          className="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition"
-                        >
-                          <PenBoxIcon size={17} />
-                        </Link>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Edit</p>
-                      </TooltipContent>
-                    </Tooltip>
-
-                    {/* Delete */}
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button
-                          onClick={() => handleDelete(note._id)}
-                          className="text-red-500 hover:text-red-700 transition"
-                        >
-                          <Trash2 size={17} />
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Delete</p>
-                      </TooltipContent>
-                    </Tooltip>
-
-                  </div>
-                </TooltipProvider>
+                <span className="text-xs text-muted-foreground">
+                  {formatDate(new Date(note.createdAt))}
+                </span>
               </div>
             ))}
           </div>
