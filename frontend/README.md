@@ -14,3 +14,39 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+# NoteStack
+
+A full-stack MERN notes application with authentication and password reset functionality.
+
+## 🚀 Features
+
+- User Authentication (Signup / Login)
+- JWT-based Authorization
+- Create, Read, Update, Delete Notes
+- Forgot Password & Reset Password Flow
+- Responsive UI with Tailwind CSS
+- Dark Mode Support
+
+## 🛠 Tech Stack
+
+Frontend:
+- React
+- Tailwind CSS
+- Axios
+
+Backend:
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- JWT Authentication
+- Nodemailer (Email Service)
+
+## 📂 Project Structure
+
+frontend/
+backend/
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the repository
